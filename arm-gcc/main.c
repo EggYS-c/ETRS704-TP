@@ -1,12 +1,13 @@
 #include <stdint.h>
+#include "stm32f446xx.h"
 
 int main(void)
 {
-	// Enable Clock GPIOA 	(RCC->AHB1ENR)
-	// PA5 Output			(GPIOA->MODER)
+	RCC->APBENR1 |= RCC_APBENR1_GPIOAEN;				// Enable Clock GPIOA 
+	GPIOA->MODER  |= 1 << GPIO_MODER_MODE5_Pos;		// PA5 output mode
 
 	while(1){
 		for(uint32_t i = 0 ; i<100000; i++);
-		// Toggle PA5		(GPIOA->ODR)	
+			GPIOA->ODR^= 1<<5				// Toggle PA5	
 	}
 }
